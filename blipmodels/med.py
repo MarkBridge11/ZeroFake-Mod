@@ -810,6 +810,8 @@ class BertModel(BertPreTrainedModel):
 
 
 class BertLMHeadModel(BertPreTrainedModel,GenerationMixin):
+    # I had to insert this because the text decoder that is called to generate the prompt is an instance of BertBLMHeadModel. However this class doesn't have that method.
+    # To grants it it has to inherit from GenerationMixin, that implements generate() and also expects to define decoding helpers such as prepare_inputs_for_generation()
 
     _keys_to_ignore_on_load_unexpected = [r"pooler"]
     _keys_to_ignore_on_load_missing = [r"position_ids", r"predictions.decoder.bias"]
@@ -949,7 +951,17 @@ class BertLMHeadModel(BertPreTrainedModel,GenerationMixin):
             "is_decoder": True,
         }
 
-    def _reorder_cache(self, past, beam_idx):
+    """
+    We have to define this to have an efficient attention mechanism during autoregressive generation of the text. This is to avoid recomputing the entire attention,
+    but to exploit past ones. This is exploited in the beam search.
+    Now we talk about beam search, that is the search of different ways of seeing the output, so different solutions (TLDR).
+    During beam search at each step you keep the best k sequences (called beams) where each beam might come from a different prior sequence.
+    beam_idx is a tensor that tells you to reorder the beams ,so to rerank them, after each generation step. It is important to maintain the history because
+    remember that we're using an autoregressive approach and each token is conditioned by the previous.
+    -> If we're at step t, and one of the current top-k beams is a continuation of a beam from step t-5 that had lower rank at the time, do we now "promote" it because its continuation turned out to be better? Yes!
+    So this method is reordering the beam_idx based on the updated beams.
+    """
+    def _reorder_cache(self, past, beam_idx): 
         reordered_past = ()
         for layer_past in past:
             reordered_past += (tuple(past_state.index_select(0, beam_idx) for past_state in layer_past),)

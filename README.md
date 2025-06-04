@@ -1,5 +1,5 @@
 ### Why forking the repo?
-This forked repo contains a notebook called ddim_inversion.ipynb that contains uni-ddim-inversion.py and sim.py. This notebook was built to address some resource constraints, since, as the author mentions in its paper, this zero-shot method is computationally expensive. Having a notebook allowed me to run this into Google Colab exploiting the limited usage of T4 GPU.
+This forked repo contains a notebook called `ddim_inversion.ipynb` that contains `uni-ddim-inversion.py` and `sim.py`. This notebook was built to address some resource constraints, since, as the author mentions in its paper, this zero-shot method is computationally expensive. Having a notebook allowed me to run this into Google Colab exploiting the limited usage of T4 GPU.
 I changed some paths in the used files to make everything work in the Colab environment. Also some small changes were made to the code, to make it work with newer versions of the dependencies needed.
 
 ### How to use it?

@@ -6,10 +6,10 @@ I changed some paths in the used files to make everything work in the Colab envi
 Run the notebook and insert your images within `/imgs` folder, then your images will be reconstructed, with name corresponding to the index number of the current image in analysis. Then (for now) you have to manually change paths in the last code chunk before "Other code" section, to calculate the SSIM score between the original and the reconstructed image.
 
 ## Improvements
-In the original code a way to take an adversarial prompt that was minimizing the cosine similarity between the original prompt and the adversarial one was not present. For this reason I implemented a simple and lightweight mechanism, that takes 1k (without duplicates) nouns from Brown corpus of nltk. Then 1k prompts are generated replacing, as mentioned in the paper, the first noun that appears with each of the 1k nouns. Cosine similarity of the original prompt with respect to the perturbed one is calculated, taking the one with the minimum value. To use cosine similarity and maintain efficiency, I decided (for now), to use embeddings that are not context-aware like Fasttext one.
+In the original code a way to take an adversarial prompt that was minimizing the cosine similarity between the original prompt and the adversarial one was not present. For this reason I implemented a simple and lightweight mechanism, that takes 1k (without duplicates) nouns from Brown corpus of nltk. Then 1k prompts are generated replacing, as mentioned in the paper, the first noun that appears with each of the 1k nouns. Cosine similarity of the original prompt with respect to the perturbed one is calculated, taking the one with the minimum value. To use cosine similarity and maintain efficiency, I decided (for now for efficiency reasons), to use embeddings that are not context-aware like Fasttext one.
 
 ### Future improvements
-- [X] Adjust the cycle that perform the comparison between reconstructed and original images from `/imgs` folder. Right now you have to manually change paths.
+- [] Improve adversarial prompt crafting.
 
 
 

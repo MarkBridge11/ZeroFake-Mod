@@ -9,7 +9,7 @@ Run the notebook and insert your images within `/imgs` folder, then your images 
 In the original code a way to take an adversarial prompt that was minimizing the cosine similarity between the original prompt and the adversarial one was not present. For this reason I implemented a simple and lightweight mechanism, that takes 1k (without duplicates) nouns from Brown corpus of nltk. Then 1k prompts are generated replacing, as mentioned in the paper, the first noun that appears with each of the 1k nouns. Cosine similarity of the original prompt with respect to the perturbed one is calculated, taking the one with the minimum value. To use cosine similarity and maintain efficiency, I decided (for now for efficiency reasons), to use embeddings that are not context-aware like Fasttext one.
 
 ### Future improvements
-- [] Improve adversarial prompt crafting.
+- [ ] Improve adversarial prompt crafting.
 
 
 
